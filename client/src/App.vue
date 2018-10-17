@@ -3,7 +3,9 @@
     <v-app>
     <page-header/>
     <main>
-    <router-view/>
+        
+         <router-view/>
+        
     </main>
     </v-app>
   </div>
@@ -28,4 +30,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
