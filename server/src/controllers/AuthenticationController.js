@@ -1,7 +1,6 @@
 const {User} = require("../models");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
-const bcrypt  = require("bcrypt-nodejs");
 
 function jwtSignUser(user){
     const ONE_WEEK = 604800;
@@ -13,8 +12,10 @@ function jwtSignUser(user){
 module.exports = {
     async register(req, res) {
         try {
+            
             const user = await User.create(req.body);
-            res.send(user.toJSON());
+            const userJSON = user.toJSON();
+            return res.send({user: userJSON, token: jwtSignUser(userJSON)});
         } catch (err) {
             res.status(400).send({
                 error: "This email account is already in use." + err
@@ -41,14 +42,14 @@ module.exports = {
             const isPasswordValid = await user.comparePassword(password);
             if (!isPasswordValid) {
                 return res.status(403).send({
-                    error: "Invalid login information" + password
+                    error: "Invalid login information"
                 });
             }
             const userJSON = user.toJSON();
             return res.send({user: userJSON, token: jwtSignUser(userJSON)});
         } catch (err) {
             return res.status(500).send({
-                error: "An error has occured" + err
+                error: "An error has occured"
             });
 
 

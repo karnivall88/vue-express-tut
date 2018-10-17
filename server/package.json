@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt-nodejs": "0.0.30",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",

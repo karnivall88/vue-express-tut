@@ -9,11 +9,11 @@ function hashPassword(user , options)
         return;
     }
     return bcrypt
-    .genSaltSync(SALT_FACTOR)
-    .then(salt => bcrypt.hashSync(user.password, salt, null))
-    .then(hash => {
-      user.setDataValue("password", hash)
-    });
+        .genSaltAsync(SALT_FACTOR)
+        .then(salt => bcrypt.hashAsync(user.password, salt, null))
+        .then(hash => {
+            user.setDataValue("password", hash)
+        });
 
 
 }  
@@ -38,6 +38,6 @@ module.exports = (sequelize, DataTypes) => {
             beforeSave: hashPassword
         }
     });
-    User.prototype.comparePassword = function (pwd) { return bcrypt.compareSync(pwd, this.password, function(err,res){})};
+    User.prototype.comparePassword = function (pwd) { return bcrypt.compareAsync(pwd, this.password)};
     return User;
 };
